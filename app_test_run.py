@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
 
-from meta_data_loader.mysql_config.mysql_meta_data_loader import DataBaseSchemaMetaData
+from meta_data_loader.mysql_meta_loader.mysql_meta_data_loader import MySqlMetaDataLoader
 
 host = 'localhost'
 port = 3305
@@ -9,7 +9,7 @@ password = 'root'
 database_schema = 'sakila'
 
 # Create an instance of the DataBaseSchemaMetaData class
-db_metadata = DataBaseSchemaMetaData(host, port, username, password, database_schema)
+db_metadata = MySqlMetaDataLoader(host, port, username, password, database_schema)
 
 # Get table names
 table_names: List[str] = db_metadata.get_table_names()

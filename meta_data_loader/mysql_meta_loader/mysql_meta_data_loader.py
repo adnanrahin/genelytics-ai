@@ -4,7 +4,7 @@ from typing import List, Dict, Any
 from pymysql.cursors import DictCursor
 
 
-class DataBaseSchemaMetaData:
+class MySqlMetaDataLoader:
     def __init__(self, host: str, port: int, username: str, password: str, database_schema: str):
         self.host = host
         self.port = port
