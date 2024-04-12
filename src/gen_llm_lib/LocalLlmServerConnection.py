@@ -24,7 +24,6 @@ class LocalLLMServerConnection:
         self.mysql_uri = f"mysql+pymysql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database_schema}"
         self.db_metadata = MySqlMetaDataLoader(self.host, self.port, self.username, self.password, self.database_schema)
         self.table_names = self.db_metadata.get_table_names()
-
         self.db = SQLDatabase.from_uri(self.mysql_uri,
                                        include_tables=self.table_names,
                                        sample_rows_in_table_info=2)
