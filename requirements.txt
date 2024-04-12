@@ -1,0 +1,17 @@
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch>=2.2.2 
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torchvision>=0.17.2
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torchaudio>=2.2.2
+tensorflow>=2.16.1
+langchain>=0.1.14
+langchain-core>=0.1.40
+langchain-community>=0.0.31
+langchain-openai>=0.1.1
+openai>=1.16.2
+pymysql>=1.1.0
+psycopg2>=2.9.9
+flask>=3.0.2
+google-ai-generativelanguage>=0.4.0
+keras>=3.1.1
