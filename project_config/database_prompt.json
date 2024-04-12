@@ -52,7 +52,7 @@
     "query": ""
   },
   {
-    "input": "",
+    "input": "Write SQL query to find all astronaut names who have flown at least one mission?",
     "query": "SELECT astronaut_fname, astronaut_lname FROM astronaut_info WHERE astronaut_id IN (  SELECT DISTINCT astronaut_id FROM mission_details);"
   }
 ]
