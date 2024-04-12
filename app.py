@@ -1,33 +1,23 @@
-from typing import List
+from flask import Flask, request, jsonify
+from gen_llm_lib import LocalLLMServerConnection
 
-from config import PostgreSqlMetaDataLoader
-from config.aid_lib import load_database_prompts
+app = Flask(__name__)
 
-training_prompts = load_database_prompts('project_config/database_prompt.json')
-host = '192.168.1.235'
-port = '32127'  # Default PostgreSQL port
-username = 'postgres'
-password = 'WbrTpN3g7q'
-database_schema = 'airflow_db'
-pg_uri = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database_schema}"
 
-# Create an instance of the DataBaseSchemaMetaData class
-db_metadata = PostgreSqlMetaDataLoader(host, port, username, password, database_schema)
+@app.route('/process_input', methods=['POST'])
+def process_input():
+    if request.method == 'POST':
+        user_prompt = request.json.get('user_prompt')
 
-# Get table names
-table_names: List[str] = db_metadata.get_table_names()
-print("Table Names:", table_names)
+        if user_prompt:
+            connection = LocalLLMServerConnection(user_prompt)
+            result = connection.process_user_input()
+            response = result
+            print(response)
+            return jsonify({'result': result})
+        else:
+            return jsonify({'error': 'Invalid input'}), 400
 
-# Get row count for a specific table
-table_name = 'dag'
-row_count: int = db_metadata.get_row_count(table_name)
-print(f"Row count for table '{table_name}': {row_count}")
 
-# Get column names for a specific table
-table_name = 'actor'
-columns: List[str] = db_metadata.get_table_columns(table_name)
-print(f"Columns for table '{table_name}': {columns}")
-
-table_name = 'actor'
-column_types = db_metadata.get_table_column_types(table_name)
-print(f"Column types for table '{table_name}': {column_types}")
+if __name__ == '__main__':
+    app.run(debug=True)
