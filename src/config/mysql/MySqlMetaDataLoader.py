@@ -5,7 +5,7 @@ from pymysql.cursors import DictCursor
 
 
 class MySqlMetaDataLoader:
-    def __init__(self, host: str, port: int, username: str, password: str, database_schema: str):
+    def __init__(self, host: str, port: str, username: str, password: str, database_schema: str):
         self.host = host
         self.port = port
         self.username = username
