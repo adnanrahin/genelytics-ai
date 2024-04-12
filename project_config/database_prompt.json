@@ -1,0 +1,58 @@
+[
+  {
+    "input": "Find All the Astronauts who have Computer Science Degree",
+    "query": "select * from astronaut_info, astronaut_education_info, degree_info where astronaut_info.astronaut_id = astronaut_education_info.astronaut_id and degree_info.degree_id = astronaut_education_info.degree_id and degree_name = 'Computer Science';"
+  },
+  {
+    "input": "Find Astronaut first_name, last_name and how many machine they completed and total distance",
+    "query": "select astronaut_info.astronaut_fname, astronaut_info.astronaut_lname, count(*), sum(mission_info.mission_distance) from astronaut_info, mission_details, mission_info where astronaut_info.astronaut_id = mission_details.astronaut_id and mission_details.mission_id = mission_info.mission_id group by astronaut_fname, astronaut_lname order by astronaut_fname, astronaut_lname ASC"
+  },
+  {
+    "input": "Find Astronauts Child Name",
+    "query": "select astronaut_info.astronaut_fname, astronaut_info.astronaut_lname, astronaut_child_info.astronaut_child_name from astronaut_info inner join astronaut_child_info where astronaut_info.astronaut_id = astronaut_child_info.astronaut_id;"
+  },
+  {
+    "input": "Find All the Space Ship Name, mission land date, mission launch date where mission objective name was SATELLITE INSTALLATION",
+    "query": "select space_ship_info.space_ship_name, mission_objective_info.mission_objective_name, mission_land_info.mission_land_date, mission_launch_info.mission_launch_date from mission_info  inner join space_ship_info on mission_info.space_ship_id = space_ship_info.space_ship_id inner join mission_objective_info on mission_info.mission_objective_id = mission_objective_info.mission_objective_id  inner join mission_land_info on mission_land_info.mission_id = mission_info.mission_id  inner join mission_launch_info on mission_launch_info.mission_id = mission_info.mission_id where mission_objective_name = 'SATELLITE INSTALLATION'; "
+  },
+  {
+    "input": "Find Number of children each Astronauts Have",
+    "query": "select astronaut_info.astronaut_fname, astronaut_info.astronaut_lname, count(astronaut_child_info.astronaut_id) from astronaut_info inner join astronaut_child_info where astronaut_info.astronaut_id = astronaut_child_info.astronaut_id group by astronaut_child_info.astronaut_id;"
+  },
+  {
+    "input": "Find Astronaut Educational Background Like University name, degree name",
+    "query": "select astronaut_info.astronaut_fname, astronaut_info.astronaut_lname, university_info.university_name, degree_info.degree_name from astronaut_info inner join astronaut_education_info on astronaut_info.astronaut_id = astronaut_education_info.astronaut_id inner join university_info on university_info.university_id = astronaut_education_info.university_id inner join degree_info on degree_info.degree_id = astronaut_education_info.degree_id;"
+  },
+  {
+    "input": " Write a query to find Astronauts Spouses?",
+    "query": "select astronaut_spouse_info.astronaut_spouse_name, astronaut_info.astronaut_fname, astronaut_info.astronaut_lname from astronaut_spouse_info inner join astronaut_info on astronaut_spouse_info.astronaut_id = astronaut_info.astronaut_id;"
+  },
+  {
+    "input": "Write SQL query to find all the astronauts who went to Princeton University and went to mission STS-41?",
+    "query": "select astronaut_fname, astronaut_lname, astronaut_info.astronaut_id from astronaut_info, university_info, astronaut_education_info where astronaut_info.astronaut_id = astronaut_education_info.astronaut_id and university_info.university_id = astronaut_education_info.university_id and university_info.university_id = (  select university_id from university_info where university_name = 'Wyoming University' ) and astronaut_info.astronaut_id in ( select astronaut_id from mission_details where mission_id = (select mission_id from mission_info where mission_name='STS-23') );"
+  },
+  {
+    "input": "Write SQL query to find all the astronauts who went Princeton University?",
+    "query": "select astronaut_fname, astronaut_lname, astronaut_info.astronaut_id from astronaut_info, university_info, astronaut_education_info where astronaut_info.astronaut_id = astronaut_education_info.astronaut_id and university_info.university_id = astronaut_education_info.university_id and university_info.university_id = (  select university_id from university_info where university_name = 'Princeton University' ) "
+  },
+  {
+    "input": "Write SQL query to find all the spouses of astronauts who's mission objective was SATELLITE INSTALLATION",
+    "query": "select astronaut_spouse_info.astronaut_spouse_name, astronaut_info.astronaut_fname, astronaut_info.astronaut_lname, mission_objective_info.mission_objective_name from astronaut_spouse_info  inner join astronaut_info on astronaut_spouse_info.astronaut_id = astronaut_info.astronaut_id  inner join mission_details on astronaut_info.astronaut_id = mission_details.astronaut_id  inner join mission_info on mission_details.mission_id = mission_info.mission_id  inner join mission_objective_info  on mission_info.mission_objective_id = mission_objective_info.mission_objective_id where mission_objective_name = 'SATELLITE INSTALLATION';"
+  },
+  {
+    "input": "Write SQL query to find space ship name and total mission distance each space ship went?",
+    "query": "SELECT space_ship_name, SUM(mission_distance) as 'Total Distance' FROM space_ship_info JOIN mission_info ON space_ship_info.space_ship_id = mission_info.space_ship_id GROUP BY space_ship_name;"
+  },
+  {
+    "input": "Write SQL query to find all astronaut names, number of missions they have flown and their total mission distance?",
+    "query": "SELECT astronaut_info.astronaut_fname, astronaut_info.astronaut_lname, COUNT(mission_details.astronaut_id) AS MissionCount, SUM(mission_info.mission_distance) AS TotalMissionDistanceFROM astronaut_infoINNER JOIN mission_details ON astronaut_info.astronaut_id = mission_details.astronaut_idINNER JOIN mission_info ON mission_details.mission_id = mission_info.mission_idGROUP BY astronaut_info.astronaut_fname, astronaut_info.astronaut_lname;"
+  },
+  {
+    "input": "Write SQL query to find all astronaut names who have flown at least one mission?",
+    "query": ""
+  },
+  {
+    "input": "",
+    "query": "SELECT astronaut_fname, astronaut_lname FROM astronaut_info WHERE astronaut_id IN (  SELECT DISTINCT astronaut_id FROM mission_details);"
+  }
+]
