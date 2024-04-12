@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
 
-from source_config.mysql.mysql_source_config import MySqlMetaDataLoader
+from config.mysql.MySqlMetaDataLoader import MySqlMetaDataLoader
 
 host = 'localhost'
 port = '3305'

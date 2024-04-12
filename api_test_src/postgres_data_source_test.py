@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
 
-from source_config.postgres.postgres_source_config import PostgreSqlMetaDataLoader
+from config.postgres.PostgreSqlMetaDataLoader import PostgreSqlMetaDataLoader
 
 host = '192.168.1.235'
 port = '32127'  # Default PostgreSQL port
