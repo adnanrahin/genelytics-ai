@@ -14,20 +14,10 @@ from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
 
 
 class LocalLLMServerConnection:
-    def __init__(self, user_prompt: str):
+    def __init__(self, user_prompt: str, db: SQLDatabase):
         self.llm = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
         self.user_prompt = user_prompt
-        self.host = 'localhost'
-        self.port = '3305'
-        self.username = 'root'
-        self.password = 'root'
-        self.database_schema = 'nasa_space_exploration_database'
-        self.mysql_uri = f"mysql+pymysql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database_schema}"
-        self.db_metadata = MySqlMetaDataLoader(self.host, self.port, self.username, self.password, self.database_schema)
-        self.table_names = self.db_metadata.get_table_names()
-        self.db = SQLDatabase.from_uri(self.mysql_uri,
-                                       include_tables=self.table_names,
-                                       sample_rows_in_table_info=2)
+        self.db = db
 
     def get_context(self):
         return self.db.get_context()
