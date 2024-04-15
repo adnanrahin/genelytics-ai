@@ -1,18 +1,9 @@
 from flask import Flask, request, jsonify
-from langchain_community.utilities.sql_database import SQLDatabase
 from config import DataBaseConnectionManager
-from config import MySqlMetaDataLoader
 from gen_llm_lib import LocalLLMServerConnection
 
 app = Flask(__name__)
 
-# host = 'localhost'
-# port = '3305'
-# username = 'root'
-# password = 'root'
-# database_schema = 'nasa_space_exploration_database'
-# data_base_type = "mysql+pymysql"
-# mysql_uri = f"{data_base_type}://{username}:{password}@{host}:{port}/{database_schema}"
 db_metadata = DataBaseConnectionManager(db_type='mysql', host='localhost', port='3305', username='root',
                                         password='root', database_schema='nasa_space_exploration_database')
 db = db_metadata.get_sql_data_base()
