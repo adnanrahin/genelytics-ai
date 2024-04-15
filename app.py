@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from langchain_community.utilities.sql_database import SQLDatabase
-
+from config import DataBaseConnectionManager
 from config import MySqlMetaDataLoader
 from gen_llm_lib import LocalLLMServerConnection
 
@@ -11,11 +11,15 @@ port = '3305'
 username = 'root'
 password = 'root'
 database_schema = 'nasa_space_exploration_database'
-mysql_uri = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database_schema}"
-db_metadata = MySqlMetaDataLoader(host, port, username, password, database_schema)
+data_base_type = "mysql+pymysql"
+mysql_uri = f"{data_base_type}://{username}:{password}@{host}:{port}/{database_schema}"
+db_metadata = DataBaseConnectionManager(db_type='mysql', host='localhost', port='3306', username='user',
+                                        password='password', database_schema='nasa_space_exploration_database')
 db = SQLDatabase.from_uri(mysql_uri,
                           include_tables=db_metadata.get_table_names(),
                           sample_rows_in_table_info=2)
+
+print(db_metadata.get_table_names())
 
 
 @app.route('/process_input', methods=['POST'])

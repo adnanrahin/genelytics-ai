@@ -1,2 +1,3 @@
 from .mysql.MySqlMetaDataLoader import MySqlMetaDataLoader
 from .postgres.PostgreSqlMetaDataLoader import PostgreSqlMetaDataLoader
+from .connection_manager.DataBaseConnectionManager import DataBaseConnectionManager

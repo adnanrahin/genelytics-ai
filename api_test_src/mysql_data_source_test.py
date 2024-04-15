@@ -9,9 +9,10 @@ password = 'root'
 database_schema = 'nasa_space_exploration_database'
 mysql_uri = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database_schema}"
 
-
 # Create an instance of the DataBaseSchemaMetaData class
-db_metadata = MySqlMetaDataLoader(host, port, username, password, database_schema)
+db_metadata = MySqlMetaDataLoader(host='localhost', port='3305', username='root', password='root',
+                                  database_schema='nasa_space_exploration_database')
+# db_metadata = MySqlMetaDataLoader(host, port, username, password, database_schema)
 
 # Get table names
 table_names: List[str] = db_metadata.get_table_names()
