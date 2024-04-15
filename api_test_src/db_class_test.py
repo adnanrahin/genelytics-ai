@@ -10,6 +10,4 @@ mysql_uri = f"{data_base_type}://{username}:{password}@{host}:{port}/{database_s
 db_metadata = DataBaseConnectionManager(db_type='mysql', host='localhost', port='3305', username='root',
                                         password='root', database_schema='nasa_space_exploration_database')
 
-print(db)
-
 print(db_metadata.get_table_names())

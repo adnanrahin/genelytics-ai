@@ -6,20 +6,16 @@ from gen_llm_lib import LocalLLMServerConnection
 
 app = Flask(__name__)
 
-host = 'localhost'
-port = '3305'
-username = 'root'
-password = 'root'
-database_schema = 'nasa_space_exploration_database'
-data_base_type = "mysql+pymysql"
-mysql_uri = f"{data_base_type}://{username}:{password}@{host}:{port}/{database_schema}"
-db_metadata = DataBaseConnectionManager(db_type='mysql', host='localhost', port='3306', username='user',
-                                        password='password', database_schema='nasa_space_exploration_database')
-db = SQLDatabase.from_uri(mysql_uri,
-                          include_tables=db_metadata.get_table_names(),
-                          sample_rows_in_table_info=2)
-
-print(db_metadata.get_table_names())
+# host = 'localhost'
+# port = '3305'
+# username = 'root'
+# password = 'root'
+# database_schema = 'nasa_space_exploration_database'
+# data_base_type = "mysql+pymysql"
+# mysql_uri = f"{data_base_type}://{username}:{password}@{host}:{port}/{database_schema}"
+db_metadata = DataBaseConnectionManager(db_type='mysql', host='localhost', port='3305', username='root',
+                                        password='root', database_schema='nasa_space_exploration_database')
+db = db_metadata.get_sql_data_base()
 
 
 @app.route('/process_input', methods=['POST'])
