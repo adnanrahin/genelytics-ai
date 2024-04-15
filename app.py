@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from config import DataBaseConnectionManager
 from gen_llm_lib import LocalLLMServerConnection
 
@@ -7,32 +7,34 @@ app = Flask(__name__)
 db_connection = None
 
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
 @app.route('/set_db_config', methods=['POST'])
 def set_db_config():
-    global db_connection  # Access the global variable
+    global db_connection
 
     try:
-        data = request.json  # Get the JSON data from the request
-        db_config = data.get('db_config')  # Extract the 'db_config' dictionary
+        data = request.json
+        db_config = data.get('db_config')
 
         if not db_config:
             raise ValueError("Missing 'db_config' data in request body.")
 
-        db_metadata = DataBaseConnectionManager(**db_config)  # Unpack config
-        db_connection = db_metadata.get_sql_data_base()  # Establish connection
+        db_metadata = DataBaseConnectionManager(**db_config)
+        db_connection = db_metadata.get_sql_data_base()
 
-        # Optional: Print table names for verification (within try block)
         print(db_metadata.get_table_names())
 
         return jsonify({'message': 'Database configuration set successfully.'})
 
     except (ValueError, KeyError) as e:
-        # Handle exceptions: missing data or invalid format
-        return jsonify({'error': str(e)}), 400  # Return error response with 400 Bad Request status code
+        return jsonify({'error': str(e)}), 400
 
     except Exception as e:
-        # Catch unexpected exceptions
-        return jsonify({'error': 'Internal server error'}), 500  # Return generic error with 500 Internal Server Error
+        return jsonify({'error': 'Internal server error'}), 500
 
 
 @app.route('/user_prompt', methods=['POST'])

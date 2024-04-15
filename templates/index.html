@@ -2,9 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Configuration</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        #chatBox {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #chatResponse pre {
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
+    <h2>Configure Database Connection</h2>
+    <div id="dbConfigForm">
+        <label for="dbType">Database Type:</label>
+        <input type="text" id="dbType" name="dbType"><br><br>
 
+        <label for="host">Host:</label>
+        <input type="text" id="host" name="host"><br><br>
+
+        <label for="port">Port:</label>
+        <input type="text" id="port" name="port"><br><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <label for="databaseSchema">Database Schema:</label>
+        <input type="text" id="databaseSchema" name="databaseSchema"><br><br>
+
+        <button onclick="setDatabaseConfig()">Connect</button>
+    </div>
+
+    <h2 id="chatTitle" style="display: none;">Chat Interface</h2>
+    <div id="chatBox" style="display: none;">
+        <textarea id="userInput" rows="4" cols="50"></textarea><br><br>
+        <button onclick="getUserPrompt()">Send</button>
+        <div id="chatResponse"></div>
+    </div>
+
+    <script>
+        function setDatabaseConfig() {
+            const dbConfig = {
+                db_type: document.getElementById('dbType').value,
+                host: document.getElementById('host').value,
+                port: document.getElementById('port').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                database_schema: document.getElementById('databaseSchema').value
+            };
+
+            fetch('/set_db_config', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ db_config: dbConfig })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.message === 'Database configuration set successfully.') {
+                    document.getElementById('dbConfigForm').style.display = 'none';
+                    document.getElementById('chatTitle').style.display = 'block';
+                    document.getElementById('chatBox').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function getUserPrompt() {
+            const userPrompt = document.getElementById('userInput').value;
+
+            fetch('/user_prompt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_prompt: userPrompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const formattedResponse = formatMarkupSyntax(data.result);
+                document.getElementById('chatResponse').innerHTML = formattedResponse;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function formatMarkupSyntax(response) {
+            // Replace `<code>` tags with preformatted text for code snippets
+            return response.replace(/<code>(.*?)<\/code>/gs, '<pre>$1</pre>');
+        }
+    </script>
 </body>
 </html>
