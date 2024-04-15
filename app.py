@@ -4,18 +4,48 @@ from gen_llm_lib import LocalLLMServerConnection
 
 app = Flask(__name__)
 
-db_metadata = DataBaseConnectionManager(db_type='mysql', host='localhost', port='3305', username='root',
-                                        password='root', database_schema='nasa_space_exploration_database')
-db = db_metadata.get_sql_data_base()
+db_connection = None
 
 
-@app.route('/process_input', methods=['POST'])
+@app.route('/set_db_config', methods=['POST'])
+def set_db_config():
+    global db_connection  # Access the global variable
+
+    try:
+        data = request.json  # Get the JSON data from the request
+        db_config = data.get('db_config')  # Extract the 'db_config' dictionary
+
+        if not db_config:
+            raise ValueError("Missing 'db_config' data in request body.")
+
+        db_metadata = DataBaseConnectionManager(**db_config)  # Unpack config
+        db_connection = db_metadata.get_sql_data_base()  # Establish connection
+
+        # Optional: Print table names for verification (within try block)
+        print(db_metadata.get_table_names())
+
+        return jsonify({'message': 'Database configuration set successfully.'})
+
+    except (ValueError, KeyError) as e:
+        # Handle exceptions: missing data or invalid format
+        return jsonify({'error': str(e)}), 400  # Return error response with 400 Bad Request status code
+
+    except Exception as e:
+        # Catch unexpected exceptions
+        return jsonify({'error': 'Internal server error'}), 500  # Return generic error with 500 Internal Server Error
+
+
+@app.route('/user_prompt', methods=['POST'])
 def process_input():
+    global db_connection
+    if db_connection is None:
+        return jsonify({'error': 'Database connection not established'}), 500
+
     if request.method == 'POST':
         user_prompt = request.json.get('user_prompt')
 
         if user_prompt:
-            connection = LocalLLMServerConnection(user_prompt, db)
+            connection = LocalLLMServerConnection(user_prompt, db_connection)
             result = connection.process_user_input()
             response = result
             print(response)
