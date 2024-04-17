@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="gen_dl" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="genelytics-ai" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="conda_env_test" project-jdk-type="Python SDK" />
 </project>

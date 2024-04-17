@@ -10,7 +10,8 @@ database_schema = 'airflow_db'
 pg_uri = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database_schema}"
 
 # Create an instance of the DataBaseSchemaMetaData class
-db_metadata = PostgreSqlMetaDataLoader(host, port, username, password, database_schema)
+db_metadata = PostgreSqlMetaDataLoader(host=host, port=port, username=username, password=password,
+                                       database_schema=database_schema)
 
 # Get table names
 table_names: List[str] = db_metadata.get_table_names()
