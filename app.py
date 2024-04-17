@@ -12,6 +12,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/user_prompt.html')
+def user_prompt():
+    return render_template('user_prompt.html')
+
+
 @app.route('/set_db_config', methods=['POST'])
 def set_db_config():
     global db_connection

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f0f29;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chatContainer {
+            width: 600px; /* Increased width */
+            max-height: 600px; /* Increased max-height */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow-y: auto;
+            background-color: #d4d9dd; /* Light grey background color */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #chatbox {
+            padding: 10px;
+        }
+
+        .message {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 8px;
+            margin-right: auto;
+            max-width: 70%;
+            word-wrap: break-word;
+            padding: 10px;
+        }
+
+        .ai-message {
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 8px;
+            margin-left: auto;
+            max-width: 70%;
+            word-wrap: break-word;
+            padding: 10px;
+        }
+
+        #inputContainer {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        #sendButton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="chatContainer">
+    <div id="chatbox"></div>
+    <div id="inputContainer">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="sendButton" onclick="getUserPrompt()">Send</button>
+    </div>
+</div>
+
+<script>
+    function getUserPrompt() {
+        const userPrompt = document.getElementById('messageInput').value;
+
+        fetch('/user_prompt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({user_prompt: userPrompt})
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('chatbox').innerHTML += `
+                    <div class="message ai-message">
+                        ${formatMarkupSyntax(data.result)}
+                    </div>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function formatMarkupSyntax(response) {
+        // Replace `<code>` tags with preformatted text for code snippets
+        return response.replace(/<code>(.*?)<\/code>/gs, '<pre>$1</pre>');
+    }
+</script>
+</body>
+</html>
