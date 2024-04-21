@@ -1,21 +1,16 @@
 from langchain_community.utilities import SQLDatabase
 from langchain_community.llms import OpenAI
-
 from config.aid_lib import load_database_prompts
 from config.mysql import MySqlMetaDataLoader
 from langchain_community.utilities import SQLDatabase
-from langchain.chains.sql_database.prompt import SQL_PROMPTS
 from langchain.chains import create_sql_query_chain
-from langchain_openai import ChatOpenAI
-from langchain_community.vectorstores import FAISS
-from langchain_core.example_selectors import SemanticSimilarityExampleSelector
-from langchain_openai import OpenAIEmbeddings
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
+from langchain_community.llms import Ollama
 
 
 class LocalLLMServerConnection:
     def __init__(self, user_prompt: str, db: SQLDatabase):
-        self.llm = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+        self.llm = Ollama(base_url='http://localhost:11434', model="mistral_sql_coder")
         self.user_prompt = user_prompt
         self.db = db
 
