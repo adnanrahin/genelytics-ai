@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from config import DataBaseConnectionManager
 from gen_llm_lib import LocalLLMServerConnection
 
@@ -9,12 +9,12 @@ db_connection = None
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return send_from_directory("../templates", "index.html")
 
 
 @app.route('/user_prompt.html')
 def user_prompt():
-    return render_template('user_prompt.html')
+    return send_from_directory("../templates", 'user_prompt.html')
 
 
 @app.route('/set_db_config', methods=['POST'])
