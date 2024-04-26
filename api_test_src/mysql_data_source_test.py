@@ -1,17 +1,18 @@
 from typing import List, Dict, Any
-
+from config.vault_client.VaultClient import VaultClient
 from config.mysql.MySqlMetaDataLoader import MySqlMetaDataLoader
 
-host = 'localhost'
-port = '3305'
-username = 'root'
-password = 'root'
-database_schema = 'nasa_space_exploration_database'
+data_base_config = VaultClient().get_vault_secret('application-key-vault', 'dev_mysql_docker_db')
+host = data_base_config['host']
+port = data_base_config['port']
+username = data_base_config['db_user']
+password = data_base_config['db_password']
+database_schema = data_base_config['database_schema']
 mysql_uri = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database_schema}"
 
 # Create an instance of the DataBaseSchemaMetaData class
-db_metadata = MySqlMetaDataLoader(host='localhost', port='3305', username='root', password='root',
-                                  database_schema='nasa_space_exploration_database')
+db_metadata = MySqlMetaDataLoader(host=host, port=port, username=username, password=password,
+                                  database_schema=database_schema)
 # db_metadata = MySqlMetaDataLoader(host, port, username, password, database_schema)
 
 # Get table names

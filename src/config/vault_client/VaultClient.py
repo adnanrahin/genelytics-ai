@@ -16,7 +16,6 @@ class VaultClient:
     def get_vault_secret(self, secret_engine, secret_name):
         curl_cmd_param = ['curl', '-H', f"X-Vault-Token: {self.vault_token}", "-X", "GET",
                           f"{self.vault_addr}/v1/{secret_engine}/data/{secret_name}"]
-        print(curl_cmd_param)
         try:
             result = subprocess.run(curl_cmd_param, capture_output=True, text=True)
             dictionary = json.loads(result.stdout)

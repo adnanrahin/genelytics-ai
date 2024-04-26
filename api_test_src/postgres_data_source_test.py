@@ -1,12 +1,13 @@
 from typing import List, Dict, Any
-
+from config.vault_client.VaultClient import VaultClient
 from config.postgres.PostgreSqlMetaDataLoader import PostgreSqlMetaDataLoader
 
-host = '192.168.1.235'
-port = '32127'  # Default PostgreSQL port
-username = 'postgres'
-password = 'WbrTpN3g7q'
-database_schema = 'airflow_db'
+data_base_config = VaultClient().get_vault_secret('application-key-vault', 'psotgres_db_secrets')
+host = data_base_config['postgres_host']
+port = data_base_config['postgres_port']
+username = data_base_config['db_user']
+password = data_base_config['db_password']
+database_schema = data_base_config['database_schema']
 pg_uri = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database_schema}"
 
 # Create an instance of the DataBaseSchemaMetaData class
