@@ -22,7 +22,7 @@ class LocalLLMServerConnection:
 
     def create_prompt(self):
         context = self.get_context()
-        training_prompts = load_database_prompts('../project_config/database_prompt.json')
+        training_prompts = load_database_prompts('database_prompt.json')
         example_prompt = PromptTemplate.from_template("User input: {input}\nSQL query: {query}")
         prompt = FewShotPromptTemplate(
             examples=training_prompts,
