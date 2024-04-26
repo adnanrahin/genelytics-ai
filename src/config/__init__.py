@@ -1,3 +1,4 @@
 from .mysql.MySqlMetaDataLoader import MySqlMetaDataLoader
 from .postgres.PostgreSqlMetaDataLoader import PostgreSqlMetaDataLoader
 from .connection_manager.DataBaseConnectionManager import DataBaseConnectionManager
+from .vault_client.VaultClient import VaultClient
