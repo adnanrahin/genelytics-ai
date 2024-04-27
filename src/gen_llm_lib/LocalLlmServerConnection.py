@@ -10,7 +10,7 @@ from langchain_community.llms import Ollama
 
 class LocalLLMServerConnection:
     def __init__(self, user_prompt: str, db: SQLDatabase):
-        self.llm = Ollama(base_url='http://192.168.1.248:11434', model="mistral_sql_coder")
+        self.llm = Ollama(base_url='http://192.168.1.248:11434', model="mistral_open_orca_7b")
         self.user_prompt = user_prompt
         self.db = db
 
