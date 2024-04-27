@@ -10,7 +10,7 @@ from langchain_community.llms import Ollama
 
 class LocalLLMServerConnection:
     def __init__(self, user_prompt: str, db: SQLDatabase):
-        self.llm = Ollama(base_url='http://localhost:11434', model="mistral_sql_coder")
+        self.llm = Ollama(base_url='http://192.168.1.248:11434', model="mistral_sql_coder")
         self.user_prompt = user_prompt
         self.db = db
 
@@ -22,7 +22,7 @@ class LocalLLMServerConnection:
 
     def create_prompt(self):
         context = self.get_context()
-        training_prompts = load_database_prompts('database_prompt.json')
+        training_prompts = load_database_prompts('nasa_database_prompt.json')
         example_prompt = PromptTemplate.from_template("User input: {input}\nSQL query: {query}")
         prompt = FewShotPromptTemplate(
             examples=training_prompts,
