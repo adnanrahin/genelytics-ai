@@ -1,5 +1,5 @@
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torch>=2.2.2 
+torch>=2.2.2
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torchvision>=0.17.2
 --find-links https://download.pytorch.org/whl/torch_stable.html
@@ -17,3 +17,6 @@ google-ai-generativelanguage>=0.4.0
 keras>=3.1.1
 langchain-experimental>=0.0.57
 pyspark==3.5.1
+bs4>=0.0.2
+langchain-chroma>=0.1.0
+langchainhub>=0.1.15
