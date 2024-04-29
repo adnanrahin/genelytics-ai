@@ -17,8 +17,8 @@ class LocalLLMServerConnection:
     def get_context(self):
         return self.db.get_context()
 
-    def create_query_chain(self):
-        return create_sql_query_chain(self.llm, self.db)
+    def create_query_chain(self, prompt):
+        return create_sql_query_chain(self.llm, self.db, prompt)
 
     def create_prompt(self):
         context = self.get_context()
@@ -34,15 +34,14 @@ class LocalLLMServerConnection:
             suffix="User input: {input}\nSQL query: ",
             input_variables=["input", "top_k", "table_info"],
         )
-        return prompt.format(
+        prompt.format(
             input=self.user_prompt,
             top_k=5,
             table_info=context["table_info"]
         )
 
     def generate_sql_query(self):
-        chain = self.create_query_chain()
-        prompt = self.create_prompt()
+        chain = self.create_query_chain(self.create_prompt())
         response = chain.invoke(
             {
                 "question": self.user_prompt
