@@ -23,6 +23,9 @@ class DataBaseConnectionManager:
         self.database_schema = kwargs.get('database_schema')
         self.mysql_uri = f"{self.data_base_type}://{self.username}:{self.password}@{self.host}:{self.port}/{self.database_schema}"
 
+    def get_mysql_url(self):
+        return self.mysql_uri
+
     def get_table_names(self) -> List[str]:
         return self.loader.get_table_names()
 
