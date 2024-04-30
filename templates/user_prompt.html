@@ -127,7 +127,7 @@
     <div id="chatbox"></div>
     <div id="inputContainer">
         <input type="text" id="messageInput" placeholder="Type your message...">
-        <button id="sendButton" onclick="getUserPrompt()">Send</button>
+        <button id="sendButton" onclick="sendMessage()">Send</button>
         <!-- Loading indicator -->
         <div id="loading">
             <div class="loader"></div>
@@ -137,21 +137,28 @@
 </div>
 
 <script>
-    function getUserPrompt() {
-        const userPrompt = document.getElementById('messageInput').value;
+    function sendMessage() {
+        const userMessage = document.getElementById('messageInput').value;
         const loading = document.getElementById('loading');
         loading.style.display = 'flex'; // Show loading indicator
+
+        // Append user's message to chatbox
+        document.getElementById('chatbox').innerHTML += `
+            <div class="message user-message">
+                ${userMessage}
+            </div>`;
 
         fetch('/user_prompt', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({user_prompt: userPrompt})
+            body: JSON.stringify({user_prompt: userMessage})
         })
             .then(response => response.json())
             .then(data => {
                 loading.style.display = 'none'; // Hide loading indicator
+                // Append AI's response to chatbox
                 document.getElementById('chatbox').innerHTML += `
                     <div class="message ai-message">
                         ${formatMarkupSyntax(data.result)}
