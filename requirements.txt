@@ -21,3 +21,4 @@ bs4>=0.0.2
 langchain-chroma>=0.1.0
 langchainhub>=0.1.15
 jupyterlab>=4.1.8
+faiss-cpu>=1.8.0
