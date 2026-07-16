@@ -1,0 +1,24 @@
+# Selected with: GENELYTICS_ENV=production
+# OpenAI (or any OpenAI-compatible gateway). Set API key via env:
+#   GENELYTICS_LLM__API_KEY=sk-...
+
+llm:
+  provider: openai
+  base_url: https://api.openai.com/v1
+  model: gpt-4o-mini
+  temperature: 0
+  api_key: null
+  max_tokens: 4096
+
+database:
+  uri: null  # set via GENELYTICS_DATABASE__URI
+
+analytics:
+  max_rows: 100
+  query_timeout_seconds: 30
+  read_only: true
+
+few_shot:
+  path: project_config/nasa_database_prompt.json
+  enabled: true
+  max_examples: 5

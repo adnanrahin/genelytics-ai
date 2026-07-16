@@ -1,0 +1,23 @@
+# Selected with: GENELYTICS_ENV=local
+# Local Ollama — change provider/model/base_url here, not in code.
+
+llm:
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model: mistral
+  temperature: 0
+  api_key: null
+
+database:
+  # optional default; UI/API can still override per session
+  uri: null
+
+analytics:
+  max_rows: 100
+  query_timeout_seconds: 30
+  read_only: true
+
+few_shot:
+  path: project_config/nasa_database_prompt.json
+  enabled: true
+  max_examples: 5

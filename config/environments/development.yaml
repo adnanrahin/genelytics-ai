@@ -1,0 +1,22 @@
+# Selected with: GENELYTICS_ENV=development
+# Dev stack — swap provider below (ollama / openai / openai_compatible / bedrock).
+
+llm:
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model: mistral
+  temperature: 0
+  api_key: null
+
+database:
+  uri: null
+
+analytics:
+  max_rows: 200
+  query_timeout_seconds: 60
+  read_only: true
+
+few_shot:
+  path: project_config/nasa_database_prompt.json
+  enabled: true
+  max_examples: 5

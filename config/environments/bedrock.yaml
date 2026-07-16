@@ -1,0 +1,32 @@
+# Selected with: GENELYTICS_ENV=bedrock
+# AWS Bedrock — requires: pip install 'genelytics[bedrock]'
+# Credentials: AWS profile, env keys, or GENELYTICS_LLM__* overrides.
+
+llm:
+  provider: bedrock
+  # Bedrock model id (also accepted as model_id)
+  model: anthropic.claude-3-5-sonnet-20240620-v1:0
+  model_id: anthropic.claude-3-5-sonnet-20240620-v1:0
+  region: us-east-1
+  temperature: 0
+  max_tokens: 4096
+  # Prefer IAM role / shared credentials file; or set:
+  credentials_profile_name: null
+  aws_access_key_id: null
+  aws_secret_access_key: null
+  aws_session_token: null
+  # Extra kwargs forwarded to ChatBedrockConverse:
+  options: {}
+
+database:
+  uri: null
+
+analytics:
+  max_rows: 100
+  query_timeout_seconds: 30
+  read_only: true
+
+few_shot:
+  path: project_config/nasa_database_prompt.json
+  enabled: true
+  max_examples: 5

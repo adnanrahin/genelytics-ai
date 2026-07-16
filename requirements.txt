@@ -1,24 +1,24 @@
---find-links https://download.pytorch.org/whl/torch_stable.html
-torch>=2.2.2
---find-links https://download.pytorch.org/whl/torch_stable.html
-torchvision>=0.17.2
---find-links https://download.pytorch.org/whl/torch_stable.html
-torchaudio>=2.2.2
-tensorflow>=2.16.1
-langchain>=0.1.14
-langchain-core>=0.1.40
-langchain-community>=0.0.31
-langchain-openai>=0.1.1
-openai>=1.16.2
-pymysql>=1.1.0
-psycopg2-binary>=2.9.9
-flask>=3.0.2
-google-ai-generativelanguage>=0.4.0
-keras>=3.1.1
-langchain-experimental>=0.0.57
-pyspark==3.5.1
-bs4>=0.0.2
-langchain-chroma>=0.1.0
-langchainhub>=0.1.15
-jupyterlab>=4.1.8
-faiss-cpu>=1.8.0
+# Prefer: pip install -e ".[demo,dev]"
+# Pinned versions (mirrors pyproject.toml)
+
+langchain==1.3.13
+langchain-core==1.4.9
+langchain-community==0.4.2
+langchain-openai==1.3.5
+langchain-ollama==1.1.0
+sqlalchemy==2.0.29
+pymysql==1.1.0
+psycopg2-binary==2.9.9
+pandas==2.2.2
+pyyaml==6.0.1
+pydantic==2.13.4
+pydantic-settings==2.14.2
+
+flask==3.0.3
+pytest==8.3.5
+pytest-cov==5.0.0
+httpx==0.27.0
+
+
+langchain-aws>=0.2.0
+boto3>=1.34.0

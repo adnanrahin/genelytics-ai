@@ -1,0 +1,23 @@
+# Selected with: GENELYTICS_ENV=openai_compatible
+# Any OpenAI-compatible API (Azure OpenAI, Groq, Together, local vLLM, etc.)
+
+llm:
+  provider: openai_compatible
+  base_url: https://api.groq.com/openai/v1   # change to your gateway
+  model: llama-3.3-70b-versatile
+  temperature: 0
+  api_key: null   # GENELYTICS_LLM__API_KEY=...
+  max_tokens: 4096
+
+database:
+  uri: null
+
+analytics:
+  max_rows: 100
+  query_timeout_seconds: 30
+  read_only: true
+
+few_shot:
+  path: project_config/nasa_database_prompt.json
+  enabled: true
+  max_examples: 5
